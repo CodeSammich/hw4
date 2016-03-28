@@ -6,6 +6,7 @@
 #include "display.h"
 #include "draw.h"
 #include "matrix.h"
+#include "math.h"
 
 
 /*======== void add_sphere() ==========
@@ -27,7 +28,7 @@
 void add_sphere( struct matrix * points, 
 		 double cx, double cy, double r, 
 		 double step ) {
-  
+  generate_sphere( points, cx, cy, r, step );
   
 }
 
@@ -50,6 +51,28 @@ void add_sphere( struct matrix * points,
 void generate_sphere( struct matrix * points, 
 		      double cx, double cy, double r, 
 		      double step ) {
+
+  double phi = 0;
+  double theta = 0; 
+  
+  struct matrix* phi_sphere = new_matrix( 4, 4);
+  struct matrix* theta_sphere = new_matrix( 4, 1 );
+
+  for(; phi < M_PI; phi += step ) {
+    ident( phi_sphere );
+    phi_sphere -> m[1][1] = cos( phi );
+    phi_sphere -> m[1][2] = sin( phi );
+    phi_sphere -> m[2][1] = sin( phi );
+    phi_sphere -> m[2][2] = cos( phi );
+    
+  }
+  phi_sphere -> m[0][0] = cos( theta );
+  phi_sphere -> m[1][0] = sin( theta );
+  phi_sphere -> m[2][0] = 0;
+  phi_sphere -> m[3][0] = 1;
+
+  matrix_mult( )
+  
 }    
 
 /*======== void add_torus() ==========
