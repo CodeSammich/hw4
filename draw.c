@@ -58,11 +58,14 @@ void generate_sphere( struct matrix * points,
   z = 0;
   for(; phi < 1; phi += step )
     for(; theta < 1; theta += step ) {
+      printf(" hi \n " );
+      
       x = r * cos( M_PI * theta ) + cx;
       y = r * sin( M_PI * theta ) * cos( 2*M_PI * phi ) + cy;
       //      z = r * cos( M_PI * theta ) * sin( 2*M_PI * phi ) + cz;
       add_point( points, x, y, z );
     }
+  printf(" bye \n" );
 }    
 
 /*======== void add_torus() ==========
@@ -144,11 +147,13 @@ void add_box( struct matrix * points,
 	      double width, double height, double depth ) {
   add_point( points, x, y, z );
   add_point( points, x, y + width, z );
-  add_point( points, x, y, z );
+  add_point( points, x, y, z + depth );
+  add_point( points, x, y + width, z + depth );
+
   add_point( points, x - height, y, z );
-  add_point( points, x - height, y, z );
-  add_point( points, x - height, y, z );
-  add_point( points, x, y, z );
+  add_point( points, x - height, y + width, z );
+  add_point( points, x - height, y, z + depth );
+  add_point( points, x - height, y + width, z + depth);
   
 }
   

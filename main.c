@@ -28,15 +28,16 @@ int main( int argc, char** argv ) {
   add_box( edges, 250, 250, 0, 100, 100, 100 );
   
   draw_lines( edges, s, c );
-
-
   
-  if ( argc == 2 )
+  /*  if ( argc == 2 )
     parse_file( argv[1], transform, edges, s );
   else
     parse_file( "stdin", transform, edges, s );
-
+  */
   display(s);
+
+  printf("hi\n");
+  save_ppm( s, "curves.ppm" );
   
   free_matrix( transform );
   free_matrix( edges );
