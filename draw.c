@@ -52,27 +52,17 @@ void generate_sphere( struct matrix * points,
 		      double cx, double cy, double r, 
 		      double step ) {
 
-  double phi = 0;
+  double phi = 0; //constant multiplied by pi
   double theta = 0; 
-  
-  struct matrix* phi_sphere = new_matrix( 4, 4);
-  struct matrix* theta_sphere = new_matrix( 4, 1 );
-
-  for(; phi < M_PI; phi += step ) {
-    ident( phi_sphere );
-    phi_sphere -> m[1][1] = cos( phi );
-    phi_sphere -> m[1][2] = sin( phi );
-    phi_sphere -> m[2][1] = sin( phi );
-    phi_sphere -> m[2][2] = cos( phi );
-    
-  }
-  phi_sphere -> m[0][0] = cos( theta );
-  phi_sphere -> m[1][0] = sin( theta );
-  phi_sphere -> m[2][0] = 0;
-  phi_sphere -> m[3][0] = 1;
-
-  matrix_mult( )
-  
+  double x, y, z;
+  z = 0;
+  for(; phi < 1; phi += step )
+    for(; theta < 1; theta += step ) {
+      x = r * cos( M_PI * theta ) + cx;
+      y = r * sin( M_PI * theta ) * cos( 2*M_PI * phi ) + cy;
+      //      z = r * cos( M_PI * theta ) * sin( 2*M_PI * phi ) + cz;
+      add_point( points, x, y, z );
+    }
 }    
 
 /*======== void add_torus() ==========
@@ -96,6 +86,8 @@ void generate_sphere( struct matrix * points,
 void add_torus( struct matrix * points, 
 		double cx, double cy, double r1, double r2, 
 		double step ) {
+  generate_torus( points, cx, cy, r1, r2, step );
+  
 }
 
 /*======== void generate_torus() ==========
@@ -116,6 +108,19 @@ void add_torus( struct matrix * points,
 void generate_torus( struct matrix * points, 
 		     double cx, double cy, double r1, double r2, 
 		     double step ) {
+  
+  double phi = 0; //constant multiplied by pi
+  double theta = 0; 
+  double x, y, z;
+  z = 0;
+  for(; phi < 1; phi += step )
+    for(; theta < 1; theta += step ) {
+      x = r1 * cos( M_PI * theta );
+      y = cos( phi ) * ( r1 * sin( theta ) + r2 );
+      
+      add_point( points, x, y, z );
+    }
+  
 }
 
 /*======== void add_box() ==========
@@ -137,6 +142,14 @@ void generate_torus( struct matrix * points,
 void add_box( struct matrix * points,
 	      double x, double y, double z,
 	      double width, double height, double depth ) {
+  add_point( points, x, y, z );
+  add_point( points, x, y + width, z );
+  add_point( points, x, y, z );
+  add_point( points, x - height, y, z );
+  add_point( points, x - height, y, z );
+  add_point( points, x - height, y, z );
+  add_point( points, x, y, z );
+  
 }
   
 /*======== void add_circle() ==========
